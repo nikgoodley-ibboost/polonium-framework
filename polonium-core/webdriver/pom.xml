@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>polonium-webdriver</artifactId>
+  <groupId>com.polonium</groupId>
+  <packaging>jar</packaging>
+  <name>Polonnium tool dedicated to Webdriver tests</name>
+  <version>1.0.0.Final</version>
+  
+  <description>
+  Polonium-Webdriver extends polonium core with paging functionality (page-object pattern),
+  and handles/recognizes fails made by selenium driver
+  </description>
+  
+  <licenses>
+		<license>
+			<name>LGPL 2.1</name>
+			<url>http://www.gnu.org/licenses/lgpl-2.1.html</url>
+		</license>
+	</licenses>
+	
+	<url>http://http://polonium-framework.com/</url>
+	
+	<scm>
+		<url>https://code.google.com/p/polonium-framework/</url>
+		<connection>https://code.google.com/p/polonium-framework/</connection>
+	</scm>
+  
+  <dependencies>
+  
+  	<dependency>
+		<groupId>org.seleniumhq.selenium</groupId>
+		<artifactId>selenium-server</artifactId>
+		<version>2.18.0</version>
+	</dependency>
+
+  	<dependency>
+  		<groupId>com.polonium</groupId>
+  		<artifactId>polonium-core</artifactId>
+  		<version>1.0.0.Final</version>
+  	</dependency>
+  </dependencies>
+</project>
