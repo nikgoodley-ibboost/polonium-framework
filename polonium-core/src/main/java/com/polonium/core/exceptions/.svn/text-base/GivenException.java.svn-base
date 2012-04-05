@@ -1,0 +1,9 @@
+package de.is24.tests.webtests.polonium.exceptions;
+
+public class GivenException extends LeadEngineTestException{
+	private static final long serialVersionUID = 1L;
+
+	public GivenException(String message) {
+		super(message);
+	}
+}

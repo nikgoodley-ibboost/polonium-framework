@@ -1,0 +1,9 @@
+package de.is24.tests.webtests.polonium.annotations;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PageURL {
+	String value() default "No @PageURL annotation defined on WebPage";
+}
