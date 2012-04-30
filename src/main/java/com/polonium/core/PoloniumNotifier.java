@@ -1,5 +1,9 @@
 package com.polonium.core;
 
+import static com.polonium.core.ExceptionsRecognizer.markedGivenExceptions;
+import static com.polonium.core.ExceptionsRecognizer.markedThenExceptions;
+import static com.polonium.core.ExceptionsRecognizer.markedWhenExceptions;
+
 import java.util.List;
 
 import org.junit.internal.AssumptionViolatedException;
@@ -7,17 +11,11 @@ import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 
-import com.polonium.core.exceptions.GivenException;
 import com.polonium.core.exceptions.PoloniumException;
-import com.polonium.core.exceptions.ThenException;
-import com.polonium.core.exceptions.WhenException;
 
 
 public class PoloniumNotifier {
 	protected RunNotifier runNotifier;
-	
-	/** test description can be notified earlier by child notifiers */
-	protected boolean testNotified = false;
 
 	public void setRunNotifier(RunNotifier runNotifier) {
 		this.runNotifier = runNotifier;
@@ -26,6 +24,7 @@ public class PoloniumNotifier {
 	/** check type of exception and notify original JUnit with */
 	public void checkException(Description description, Throwable e) {
 		Throwable cause = e.getCause();
+		Class<?> causeClass = cause.getClass();
 		
 		if (cause instanceof AssumptionViolatedException) {
 			setIgnore(description);
@@ -36,24 +35,31 @@ public class PoloniumNotifier {
 			setFailure(description, cause);
 			return;
 		} else{
+			for(Class<? extends Exception> markedException : markedGivenExceptions){
+				if(markedException.getName().equals(causeClass.getName())){
+					setDetailedGivenFailure(description, cause);
+					return;
+				}
+			}
 			
-			if(!((cause instanceof PoloniumException) || (cause instanceof AssertionError)) && !testNotified){
+			for(Class<? extends Exception> markedException : markedWhenExceptions){
+				if(markedException.getName().equals(causeClass.getName())){
+					setDetailedWhenFailure(description, cause);
+					return;
+				}
+			}
+			
+			for(Class<? extends Exception> markedException : markedThenExceptions){
+				if(markedException.getName().equals(causeClass.getName())){
+					setDetailedThenFailure(description, cause);
+					return;
+				}
+			}
+			
+			if(!((cause instanceof PoloniumException) || (cause instanceof AssertionError))){
 				setFailure(description, cause);
 			}
-	
-			if (cause instanceof GivenException) {
-				setDetailedGivenFailure(description, cause);
-			}
-	
-			if (cause instanceof WhenException) {
-				setDetailedWhenFailure(description, cause);
-			}
-			if ((cause instanceof ThenException) || (cause instanceof AssertionError)) {
-				setDetailedThenFailure(description, cause);
-			}
 		}
-		
-		testNotified = false;
 	}
 	
 	protected void setDetailedGivenFailure(Description description, Throwable e){

@@ -1,4 +1,4 @@
-package com.polonium.webdriver.annotations;
+package com.polonium.core.annotations;
 
 import static java.lang.annotation.ElementType.TYPE;
 
@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/** Alternative for defining URL of PoloniumPage in constructor
+/** Mark list of exceptions that will be recognized as then fails
  *  
  * @author Marek Serwanski
  * 
@@ -15,6 +15,6 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(TYPE)
-public @interface PageURL {
-	String value() default "No @PageURL annotation defined on WebPage";
+public @interface MarkedThenFail {
+	public Class<? extends Exception>[] value();
 }

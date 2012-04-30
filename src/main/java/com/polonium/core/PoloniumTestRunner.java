@@ -30,11 +30,13 @@ public class PoloniumTestRunner extends Runner {
 	private PoloniumTest testInstance;
 	protected DescriptionBuilder descriptionBuilder;
 	protected PoloniumNotifier notifier;
+	protected ExceptionsRecognizer exceptionsRecognizer;
 	private List<Method> allMethods, tests;
 
 	/** Creates necessary intances and build arrays of methods in test class */
 	public PoloniumTestRunner(Class<? extends PoloniumTest> testClass) {
 		testInstance = getTestInstance(testClass);
+		exceptionsRecognizer = new ExceptionsRecognizer(testClass);
 		descriptionBuilder = new DescriptionBuilder();
 		notifier = new PoloniumNotifier();
 
