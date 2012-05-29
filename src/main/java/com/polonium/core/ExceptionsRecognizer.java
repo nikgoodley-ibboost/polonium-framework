@@ -10,6 +10,10 @@ import com.polonium.core.exceptions.GivenException;
 import com.polonium.core.exceptions.ThenException;
 import com.polonium.core.exceptions.WhenException;
 
+/** Class creates three static lists with defined exception types to recognized 
+ *
+ * @author Marek Serwanski
+ */
 public class ExceptionsRecognizer {
 	public static List<Class<? extends Exception>> markedWhenExceptions = new ArrayList<Class<? extends Exception>>();
 	public static List<Class<? extends Exception>> markedGivenExceptions = new ArrayList<Class<? extends Exception>>();
@@ -26,7 +30,7 @@ public class ExceptionsRecognizer {
 		markedThenExceptions.add(ThenException.class);
 	}
 	
-	private void addProvidedExceptions(Class<? extends PoloniumTest> testClass) {
+	private void addProvidedExceptions(Class<?> testClass) {
 		if(testClass.isAnnotationPresent(MarkedGivenFail.class)){
 			for(Class<? extends Exception> markedException : testClass.getAnnotation(MarkedGivenFail.class).value()){
 				markedGivenExceptions.add(markedException);
@@ -43,6 +47,12 @@ public class ExceptionsRecognizer {
 			for(Class<? extends Exception> markedException : testClass.getAnnotation(MarkedThenFail.class).value()){
 				markedThenExceptions.add(markedException);
 			}
+		}
+		
+		//TODO: check why sometimes class returns annotations of its parent, sometimes not. And remove this shit! (oracle jdk6)
+		Class<?> parent = testClass.getSuperclass();
+		if(parent != null && !(parent.getName().equals("PoloniumTest"))){
+			addProvidedExceptions(parent);
 		}
 	}
 }

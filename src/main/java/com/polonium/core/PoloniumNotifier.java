@@ -102,9 +102,9 @@ public class PoloniumNotifier {
 	public void setStarted(Description description) {
 		runNotifier.fireTestStarted(description);
 
-		for (Description childDescription : description.getChildren()) {
-			setStarted(childDescription);
-		}
+//		for (Description childDescription : description.getChildren()) {
+//			setStarted(childDescription);
+//		}
 	}
 
 	public void setOK(Description description) {

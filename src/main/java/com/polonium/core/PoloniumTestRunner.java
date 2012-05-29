@@ -57,6 +57,12 @@ public class PoloniumTestRunner extends Runner {
 		runMethods();
 	}
 	
+	/** returns proper number of tests (not counting given/when/then descriptions as tests */ 
+	@Override
+	public int testCount() {
+		return tests.size();
+	}
+	
 	/** Flow: <br />
 	 * 1. Invoke all methods annotated @Before <br />
 	 * 2. Iterate all methods annotated @Test : <br />
