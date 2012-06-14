@@ -15,9 +15,9 @@ import com.polonium.core.exceptions.WhenException;
  * @author Marek Serwanski
  */
 public class ExceptionsRecognizer {
-	public static List<Class<? extends Exception>> markedWhenExceptions = new ArrayList<Class<? extends Exception>>();
-	public static List<Class<? extends Exception>> markedGivenExceptions = new ArrayList<Class<? extends Exception>>();
-	public static List<Class<? extends Exception>> markedThenExceptions = new ArrayList<Class<? extends Exception>>();
+	public static List<Class<? extends Throwable>> markedWhenExceptions = new ArrayList<Class<? extends Throwable>>();
+	public static List<Class<? extends Throwable>> markedGivenExceptions = new ArrayList<Class<? extends Throwable>>();
+	public static List<Class<? extends Throwable>> markedThenExceptions = new ArrayList<Class<? extends Throwable>>();
 
 	public ExceptionsRecognizer(Class<? extends PoloniumTest> testClass){
 		addDefaultExceptions();
@@ -32,19 +32,19 @@ public class ExceptionsRecognizer {
 	
 	private void addProvidedExceptions(Class<?> testClass) {
 		if(testClass.isAnnotationPresent(MarkedGivenFail.class)){
-			for(Class<? extends Exception> markedException : testClass.getAnnotation(MarkedGivenFail.class).value()){
+			for(Class<? extends Throwable> markedException : testClass.getAnnotation(MarkedGivenFail.class).value()){
 				markedGivenExceptions.add(markedException);
 			}
 		}
 		
 		if(testClass.isAnnotationPresent(MarkedWhenFail.class)){
-			for(Class<? extends Exception> markedException : testClass.getAnnotation(MarkedWhenFail.class).value()){
+			for(Class<? extends Throwable> markedException : testClass.getAnnotation(MarkedWhenFail.class).value()){
 				markedWhenExceptions.add(markedException);
 			}
 		}
 		
 		if(testClass.isAnnotationPresent(MarkedThenFail.class)){
-			for(Class<? extends Exception> markedException : testClass.getAnnotation(MarkedThenFail.class).value()){
+			for(Class<? extends Throwable> markedException : testClass.getAnnotation(MarkedThenFail.class).value()){
 				markedThenExceptions.add(markedException);
 			}
 		}

@@ -35,21 +35,21 @@ public class PoloniumNotifier {
 			setFailure(description, cause);
 			return;
 		} else{
-			for(Class<? extends Exception> markedException : markedGivenExceptions){
+			for(Class<? extends Throwable> markedException : markedGivenExceptions){
 				if(markedException.getName().equals(causeClass.getName())){
 					setDetailedGivenFailure(description, cause);
 					return;
 				}
 			}
 			
-			for(Class<? extends Exception> markedException : markedWhenExceptions){
+			for(Class<? extends Throwable> markedException : markedWhenExceptions){
 				if(markedException.getName().equals(causeClass.getName())){
 					setDetailedWhenFailure(description, cause);
 					return;
 				}
 			}
 			
-			for(Class<? extends Exception> markedException : markedThenExceptions){
+			for(Class<? extends Throwable> markedException : markedThenExceptions){
 				if(markedException.getName().equals(causeClass.getName())){
 					setDetailedThenFailure(description, cause);
 					return;
@@ -102,9 +102,9 @@ public class PoloniumNotifier {
 	public void setStarted(Description description) {
 		runNotifier.fireTestStarted(description);
 
-//		for (Description childDescription : description.getChildren()) {
-//			setStarted(childDescription);
-//		}
+		for (Description childDescription : description.getChildren()) {
+			setStarted(childDescription);
+		}
 	}
 
 	public void setOK(Description description) {

@@ -16,5 +16,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(TYPE)
 public @interface MarkedThenFail {
-	public Class<? extends Exception>[] value();
+	public Class<? extends Throwable>[] value();
 }

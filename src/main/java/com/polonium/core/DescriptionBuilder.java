@@ -16,6 +16,7 @@ import com.polonium.core.annotations.DetailedDescription;
 import com.polonium.core.annotations.Given;
 import com.polonium.core.annotations.Then;
 import com.polonium.core.annotations.When;
+import com.polonium.core.exceptions.AnnotationException;
 
 
 /** Contains methods to build common and detailed test descriptions
@@ -60,15 +61,16 @@ public class DescriptionBuilder {
 		classDescription = Description.createSuiteDescription(testClass.getName());
 		
 		for (Method test : tests) {
+			if(!isTestProperlyAnnotated(test)){
+				throw new AnnotationException(test.getName() + " is not properly annotaded with @Given @When @Then");
+			}
 			if(!DETAILED_DESCRIPTION) createOneDescriptionFromAnnotations(test);
 			else{
 				Description testDescription = Description.createSuiteDescription(test.getName());
 				classDescription.addChild(testDescription);
 				
-				if (isTestProperlyAnnotated(test)){
-					testCounter++;
-					createDescriptionsFromAnnotations(testClass, test, testDescription);
-				}
+				testCounter++;
+				createDescriptionsFromAnnotations(testClass, test, testDescription);
 			}
 		}
 	}
